@@ -27,12 +27,14 @@ def reloadData():
 	global totalSumInfected
 	global globalData
 	global stateGlobalData
+	global distNAtracker
 	rowCount = False
 	rowNum = 1
 	totalSumDead = 0
 	totalSumInfected = 0
 	globalData = {}
 	stateGlobalData = {}
+	distNAtracker = {}
 	for row in sheet.get():   #sheet.get the whole document as a list of lists
 
 		if not rowCount:
