@@ -179,7 +179,7 @@ def findDistrict(districtName):
 	districtText = ''
 	for stateBoi in totalData:
 		if districtName in totalData[stateBoi]:
-			districtText = 'Values for {}:\n'.format(districtName) + ':\nInfected : {}'.format(totalData[stateBoi][districtName]["infected"]) + '\nDead : {}'.format(totalData[stateBoi][districtName]["dead"])
+			districtText = 'Values for {}:\n'.format(districtName) + '\nInfected : {}'.format(totalData[stateBoi][districtName]["infected"]) + '\nDead : {}'.format(totalData[stateBoi][districtName]["dead"])
 			return districtText
 	return('{} not found, check spelling and try again'.format(districtName))
 
@@ -188,7 +188,7 @@ def stateDists(stateName):
 	stateDistrictsText = 'Districts with numbers in {}:\n'.format(stateName)
 	if stateName in totalData:
 		for districtBoi in totalData[stateName]:
-			stateDistrictsText += districtBoi +':\nInfected : {}\nDead : {}\n\n'.format(totalData[stateName][districtBoi]["infected"], totalData[stateName][districtBoi]["dead"])
+			stateDistrictsText += districtBoi +'\nInfected : {}\nDead : {}\n\n'.format(totalData[stateName][districtBoi]["infected"], totalData[stateName][districtBoi]["dead"])
 		return stateDistrictsText
 	return "Found nothing for {}".format(stateName)
 
