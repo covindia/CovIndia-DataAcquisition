@@ -177,6 +177,8 @@ def findState(stateName):
 def findDistrict(districtName):
 	reloadData()
 	districtText = ''
+	if(districtName == 'DIST_NA'):
+		return 'Use !distNAtot to get all DIST_NA, or !distNAstate statename for a particular state'
 	for stateBoi in totalData:
 		if districtName in totalData[stateBoi]:
 			districtText = 'Values for {}:\n'.format(districtName) + '\nInfected : {}'.format(totalData[stateBoi][districtName]["infected"]) + '\nDead : {}'.format(totalData[stateBoi][districtName]["dead"])
@@ -185,10 +187,15 @@ def findDistrict(districtName):
 
 def stateDists(stateName):
 	reloadData()
+	infectedSum = 0
+	deadSum = 0
 	stateDistrictsText = 'Districts with numbers in {}:\n'.format(stateName)
 	if stateName in totalData:
 		for districtBoi in totalData[stateName]:
+			infectedSum += todaysData[stateBoi][districtBoi]["infected"]
+			deadSum += todaysData[stateBoi][districtBoi]["dead"]
 			stateDistrictsText += districtBoi +'\nInfected : {}\nDead : {}\n\n'.format(totalData[stateName][districtBoi]["infected"], totalData[stateName][districtBoi]["dead"])
+		stateDistrictsText += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
 		return stateDistrictsText
 	return "Found nothing for {}".format(stateName)
 
@@ -217,10 +224,15 @@ def distNAstate(stateName):
 def getTodaysData():
 	reloadData()
 	text = ''
+	infectedSum = 0
+	deadSum = 0
 	for stateBoi in todaysData:
 		text += 'In state {}:\n'.format(stateBoi)
 		for districtBoi in todaysData[stateBoi]:
+			infectedSum += todaysData[stateBoi][districtBoi]["infected"]
+			deadSum += todaysData[stateBoi][districtBoi]["dead"]
 			text += '{} :\nInfected : {}\nDead : {}\n\n'.format(districtBoi, todaysData[stateBoi][districtBoi]["infected"], todaysData[stateBoi][districtBoi]["dead"])
+	text += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSumfffndms)
 	if(text != ''):
 		return text
 	return 'Nothing entered for today'
