@@ -192,8 +192,8 @@ def stateDists(stateName):
 	stateDistrictsText = 'Districts with numbers in {}:\n'.format(stateName)
 	if stateName in totalData:
 		for districtBoi in totalData[stateName]:
-			infectedSum += todaysData[stateBoi][districtBoi]["infected"]
-			deadSum += todaysData[stateBoi][districtBoi]["dead"]
+			infectedSum += totalData[stateName][districtBoi]["infected"]
+			deadSum += totalData[stateName][districtBoi]["dead"]
 			stateDistrictsText += districtBoi +'\nInfected : {}\nDead : {}\n\n'.format(totalData[stateName][districtBoi]["infected"], totalData[stateName][districtBoi]["dead"])
 		stateDistrictsText += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
 		return stateDistrictsText
@@ -232,7 +232,7 @@ def getTodaysData():
 			infectedSum += todaysData[stateBoi][districtBoi]["infected"]
 			deadSum += todaysData[stateBoi][districtBoi]["dead"]
 			text += '{} :\nInfected : {}\nDead : {}\n\n'.format(districtBoi, todaysData[stateBoi][districtBoi]["infected"], todaysData[stateBoi][districtBoi]["dead"])
-	text += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSumfffndms)
+	text += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
 	if(text != ''):
 		return text
 	return 'Nothing entered for today'

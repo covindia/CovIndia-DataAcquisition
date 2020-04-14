@@ -2,6 +2,7 @@ from slack import RTMClient
 import time
 import json
 import getValues
+import requests
 
 def getTokens():
 	allTokens = json.load(open('res/TOKENS.json', 'r'))
@@ -25,7 +26,6 @@ def say_hello(**payload):
 		user = data['user']
 	except:
 		pass
-
 	if(message.startswith('!')):
 		if(message.startswith('!start')):
 			web_client.chat_postMessage(channel = channel_id, text="Hi <@{}>! I'm still awake!".format(user))
@@ -82,9 +82,9 @@ def say_hello(**payload):
 		else:
 			web_client.chat_postMessage(channel = channel_id, text="IDK that command, try !help")
 	
-	elif('boomer' in message.lower()):
-		web_client.chat_postMessage(channel = channel_id, text="Wait till I get coded for this :angry:")
-			
+	elif('boomer' in message.lower() and user != ''):
+		requests.post('https://slack.com/api/files.upload', data={'token': getTokens()["slack_bot_token"], 'channels': [channel_id], 'title': 'The boomer burn'}, files={'file': open('res/ok_boomer.jpg', 'rb')})
+
 rtm_client = RTMClient(token=getTokens()["slack_bot_token"])
 rtm_client.start()
 
