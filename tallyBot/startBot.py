@@ -30,47 +30,47 @@ def say_hello(**payload):
 		if(message.startswith('!start')):
 			web_client.chat_postMessage(channel = channel_id, text="Hi <@{}>! I'm still awake!".format(user))
 
-		elif(message.startswith('!districtData')):
+		elif(message.startswith('!districtdata')):
 			web_client.chat_postMessage(channel = channel_id, text="Here's the district-wise tally :\n{}".format(getValues.districtData()))
 
-		elif(message.startswith('!stateData')):
+		elif(message.startswith('!statedata')):
 			web_client.chat_postMessage(channel = channel_id, text="Here's the state-wise tally :\n{}".format(getValues.stateData()))
 
-		elif(message.startswith('!apiData')):
+		elif(message.startswith('!apidata')):
 			web_client.chat_postMessage(channel = channel_id, text="Here's the API data :\n{}".format(getValues.apiDistrictData()))
 
-		elif(message.startswith('!findState')):
+		elif(message.startswith('!findstate')):
 			stateName = message[11:]
 			if(len(stateName) > 0):
 				web_client.chat_postMessage(channel = channel_id, text=getValues.findState(stateName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the State")
 
-		elif(message.startswith('!findDist')):
+		elif(message.startswith('!finddist')):
 			districtName = message[10:]
 			if(len(districtName) > 0):
 				web_client.chat_postMessage(channel = channel_id, text=getValues.findDistrict(districtName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the District")
 		
-		elif(message.startswith('!stateDists')):
+		elif(message.startswith('!statedists')):
 			stateName = message[12:]
 			if(len(stateName) > 0):
 				web_client.chat_postMessage(channel = channel_id, text=getValues.stateDists(stateName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the State")
 
-		elif(message.startswith('!distNAtot')):
+		elif(message.startswith('!distnatot')):
 			web_client.chat_postMessage(channel = channel_id, text=getValues.totDistNA())
 
-		elif(message.startswith('!distNAstate')):
+		elif(message.startswith('!distnastate')):
 			stateName = message[13:]
 			if(len(stateName) > 0):
 				web_client.chat_postMessage(channel = channel_id, text=getValues.distNAstate(stateName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the State")
 		
-		elif(message.startswith('!todaysData')):
+		elif(message.startswith('!todaysdata')):
 			web_client.chat_postMessage(channel = channel_id, text=getValues.getTodaysData())
 			
 		elif(message.startswith('!help')):
