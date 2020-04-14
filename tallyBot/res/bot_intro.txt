@@ -12,6 +12,7 @@ Below are few of the commands you can use:
 `!statedists stateName` : Get the values of all districts in a state
 `!distnatot` : Get the total DIST_NA
 `!distnastate stateName` : Get the DIST_NA for a state
-`!todaysdata` : Get today's updates
+`!todaysdata` : Get today's updates, district-wise
+`!todaysstate`: Get today's updates, state-wise
 
 NOTE : Don't even dare to say ok boomer
