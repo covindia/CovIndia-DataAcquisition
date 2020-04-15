@@ -178,7 +178,7 @@ def findDistrict(districtName):
 	reloadData()
 	districtText = ''
 	if(districtName == 'DIST_NA'):
-		return 'Use !distNAtot to get all DIST_NA, or !distNAstate statename for a particular state'
+		return 'Use !distnatot to get all DIST_NA, or !distnastate statename for a particular state'
 	for stateBoi in totalData:
 		if districtName in totalData[stateBoi]:
 			districtText = 'Values for {}:\n'.format(districtName) + '\nInfected : {}'.format(totalData[stateBoi][districtName]["infected"]) + '\nDead : {}'.format(totalData[stateBoi][districtName]["dead"])
@@ -201,15 +201,18 @@ def stateDists(stateName):
 
 def totDistNA():
 	reloadData()
+	retText = 'DIST_NAs statewise :\n'
 	distNAinfected = 0
 	distNAdead = 0
 	for stateBoi in totalData:
 		for districtBoi in totalData[stateBoi]:
 			if(districtBoi == 'DIST_NA'):
+				retText += 'In {}:\n'.format(stateBoi) + 'Infected : {}\nDead : {}\n\n'.format(totalData[stateBoi][districtBoi]["infected"], totalData[stateBoi][districtBoi]["dead"])
 				distNAinfected += totalData[stateBoi][districtBoi]["infected"]
 				distNAdead += totalData[stateBoi][districtBoi]["dead"]
 	if(distNAdead != 0 and distNAinfected != 0):
-		return 'Total DIST_NA count :\nInfected : {}\nDead : {}'.format(distNAinfected, distNAdead)
+		retText += 'Total DIST_NA count :\nInfected : {}\nDead : {}'.format(distNAinfected, distNAdead)
+		return retText
 	return 'Good News, ALL DIST_NA CLEARED!!! Party time'
 
 def distNAstate(stateName):
