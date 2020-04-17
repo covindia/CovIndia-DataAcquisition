@@ -259,3 +259,17 @@ def getTodaysStateData():
 	if(text != ''):
 		return text
 	return 'Nothing entered for today'
+
+def findTodaysState(stateName):
+	reloadData()
+	text = 'Todays data for {}\n'.format(stateName)
+	infectedSum = 0
+	deadSum = 0
+	if stateName in todaysData:
+		for districtBoi in todaysData[stateName]:
+			infectedSum += todaysData[stateName][districtBoi]["infected"]
+			deadSum += todaysData[stateName][districtBoi]["dead"]
+			text += '{}:\nInfected : {}\nDead : {}\n\n'.format(districtBoi, todaysData[stateName][districtBoi]["infected"], todaysData[stateName][districtBoi]["dead"])
+		text += 'Total infected today : {}\nTotal dead today : {}'.format(infectedSum, deadSum)
+		return text
+	return 'Nothing entered for today'
