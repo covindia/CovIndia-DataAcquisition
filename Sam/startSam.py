@@ -56,7 +56,7 @@ def main():
 			updateTweetsInfected()
 
 			if(update_time == 15):
-				sendReport({'text': "Update:", 'attachments' : [{'text' : "Update : Sam is still soaring the skies."}]})
+				sendReport({'text': "Report:", 'attachments' : [{'text' : "Update : Sam is still soaring the skies."}]})
 				update_time = 0
 
 			update_time += 1
@@ -65,7 +65,7 @@ def main():
 	
 	except Exception as e:
 		
-		sendReport({'text': "Sam has crashed! <@" + slack_tokens()["mechanicID"] + "> manual restart required. Do it ASAP!", 'attachments' : [{'text' : "Exception : {}".format(e)}]})
+		sendReport({'text': "Sam has crashed! <@" + slack_tokens()["mechanicID"] + "> restart required. Do it ASAP!", 'attachments' : [{'text' : "Exception : {}".format(e)}]})
 		print('Sam crashed real hard. Error : {}'.format(e))
 	
 	# You don't wan't this to happen, it is very bad if it does, since Sam is our OP data-gatherer
@@ -80,8 +80,9 @@ if __name__ == '__main__':
 		sendReport({'text': "Report: ", 'attachments' : [{'text' : "Sam has landed safely. Stopped manually."}]})
 	
 	except Exception as e:
-		sendReport({'text': "Sam has crashed! <@" + slack_tokens()["mechanicID"] + "> manual restart required. Do it ASAP!", 'attachments' : [{'text' : "Exception : {}".format(e)}]})
+		sendReport({'text': "Sam has crashed! <@" + slack_tokens()["mechanicID"] + "> restart required. Do it ASAP!", 'attachments' : [{'text' : "Exception : {}".format(e)}]})
+
 
 # I'm not sure which Except will work, beacuse of the infinite While loop, let's see if we can figure it out
-
+# Just realised that both the excepts are important for catching different crashes so meh,  it's fine
 # Also, don't forget to checkout this video, cuz it's fun XD https://www.youtube.com/watch?v=dQw4w9WgXcQ
