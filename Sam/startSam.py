@@ -1,3 +1,10 @@
+"""
+	Code for our OP data gatherer Sam
+	
+	We also have Red Wing who always keeps an eye on Sam, his trusty owner
+
+	Author: Srikar
+"""
 import tweepy
 import json
 import time
@@ -16,12 +23,12 @@ auth.set_access_token(getTokens()["access_token"], getTokens()["access_token_sec
 
 api = tweepy.API(auth, wait_on_rate_limit = True)
 
-def sendReport(jsonData):
-
+def sendReport(jsonData): # Red Wing's maing job
+	#Too lazy to write this everytime, hence make function, get even more lazy
 	response = requests.post(slack_tokens()["url"], json=jsonData, headers={'Content-Type': 'application/json'})
 
 	if(response.status_code != 200):
-		print("Failed to send message. Error : " + response.text)
+		print("Failed to send message. Error : " + response.text) #ideally this should never happen
 
 def checkCase(text):
 	text = text.lower()
@@ -55,7 +62,7 @@ def main():
 
 			updateTweetsInfected()
 
-			if(update_time == 15):
+			if(update_time == 30): # 30 is the minutes after which Red Wing will report about Sam's status
 				sendReport({'text': "Report:", 'attachments' : [{'text' : "Update : Sam is still soaring the skies."}]})
 				update_time = 0
 
