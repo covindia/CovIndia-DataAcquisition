@@ -54,8 +54,8 @@ def updateTweetsInfected():
 				print('Exception : {}'.format(e))
 				print('Tweet : {}\n\n'.format(tweet.text))
 				
-		elif(antiCreepTime == 20):
-			sendReport({'text': "Report:", 'attachments' : [{'text' : "Chill, Twitter API still working, last tweet : " + tweet.text}]})
+		elif(antiCreepTime == 20): # The actual code for antiCreep 
+			sendReport({'text': "Report:", 'attachments' : [{'text' : "Sam is still scanning, last scan : " + tweet.text}]})
 			antiCreepTime = 0
 
 def main():
