@@ -17,6 +17,7 @@ def slack_tokens():
 	return json.load(open('res/slackTokens.json', 'r'))
 
 minutes = 1
+antiCreepTime = 0
 
 auth = tweepy.OAuthHandler(getTokens()["API_key"], getTokens()["API_secret_key"])
 auth.set_access_token(getTokens()["access_token"], getTokens()["access_token_secret"])
@@ -35,19 +36,27 @@ def checkCase(text):
 	return (('covid' in text or 'coronavirus' in text) and ('fresh' in text or 'positive' in text or 'new case' in text or 'dead' in text or 'death' in text or 'deaths' in text or 'passed away' in text or 'dies' in text) or 'bulletin' in text)
 
 def updateTweetsInfected():
-
+	
+	global antiCreepTime  # It gets really creepy if Sam doesn't update us for a loong time, so 
+	antiCreepTime += 1    # we have anti creep telling us that Sam is still out there, just not reporting nonsense :-)
+	
 	public_tweets = api.home_timeline()
-
+	
 	for tweet in public_tweets:
 
 		if(checkCase(tweet.text)):
 
 			try:
 				tweet.retweet()
+				antiCreepTime = 0
 			
 			except Exception as e:
 				print('Exception : {}'.format(e))
 				print('Tweet : {}\n\n'.format(tweet.text))
+				
+		elif(antiCreepTime == 20):
+			sendReport({'text': "Report:", 'attachments' : [{'text' : "Chill, Twitter API still working, last tweet : " + tweet.text}]})
+			antiCreepTime = 0
 
 def main():
 
