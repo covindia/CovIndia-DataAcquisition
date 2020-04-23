@@ -35,6 +35,10 @@ def checkCase(text):
 	text = text.lower()
 	return (('covid' in text or 'coronavirus' in text) and ('fresh' in text or 'positive' in text or 'new case' in text or 'dead' in text or 'death' in text or 'deaths' in text or 'passed away' in text or 'dies' in text) or 'bulletin' in text)
 
+def MPcase(text): # MP is weird, has everything in Hindi, this is the only english thing it had ;-;
+	text = text.lower()
+	return(('#mpfightscorona' in text) and ('#jansamparkmp' in text))
+
 def updateTweetsInfected():
 	
 	global antiCreepTime  # It gets really creepy if Sam doesn't update us for a loong time, so 
@@ -44,7 +48,7 @@ def updateTweetsInfected():
 	
 	for tweet in public_tweets:
 
-		if(checkCase(tweet.text)):
+		if(checkCase(tweet.text) or MPcase(tweet.text)):
 
 			try:
 				tweet.retweet()
