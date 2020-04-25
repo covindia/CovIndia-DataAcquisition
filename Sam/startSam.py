@@ -58,8 +58,8 @@ def updateTweetsInfected():
 				print('Exception : {}'.format(e))
 				print('Tweet : {}\n\n'.format(tweet.text))
 				
-		elif(antiCreepTime == 20): # The actual code for antiCreep 
-			sendReport({'text': "Report:", 'attachments' : [{'text' : "Sam is still scanning, last scan : " + tweet.text}]})
+		elif(antiCreepTime == 40): # The actual code for antiCreep 
+			sendReport({'text': "AntiCreep:", 'attachments' : [{'text' : "Sam is still scanning, last scan : " + tweet.text}]})
 			antiCreepTime = 0
 
 def main():
@@ -75,7 +75,7 @@ def main():
 
 			updateTweetsInfected()
 
-			if(update_time == 30): # 30 is the minutes after which Red Wing will report about Sam's status
+			if(update_time == 60): # 60 is the minutes after which Red Wing will report about Sam's status
 				sendReport({'text': "Report:", 'attachments' : [{'text' : "Update : Sam is still soaring the skies."}]})
 				update_time = 0
 
