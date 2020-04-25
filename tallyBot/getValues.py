@@ -181,7 +181,7 @@ def findDistrict(districtName):
 		return 'Use !distnatot to get all DIST_NA, or !distnastate statename for a particular state'
 	for stateBoi in totalData:
 		if districtName in totalData[stateBoi]:
-			districtText = 'Values for {}:\n'.format(districtName) + '\nInfected : {}'.format(totalData[stateBoi][districtName]["infected"]) + '\nDead : {}'.format(totalData[stateBoi][districtName]["dead"])
+			districtText = 'Values for {}, {}:\n'.format(districtName, stateBoi) + '\nInfected : {}'.format(totalData[stateBoi][districtName]["infected"]) + '\nDead : {}'.format(totalData[stateBoi][districtName]["dead"])
 			return districtText
 	return('{} not found, check spelling and try again'.format(districtName))
 
