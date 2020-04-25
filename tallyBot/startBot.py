@@ -1,7 +1,7 @@
 from slack import RTMClient
 import time
 import json
-import getValues
+import getValues as gV
 import requests
 
 def getTokens():
@@ -31,54 +31,58 @@ def say_hello(**payload):
 			web_client.chat_postMessage(channel = channel_id, text="Hi <@{}>! I'm still awake!".format(user))
 
 		elif(message.startswith('!districtdata')):
-			web_client.chat_postMessage(channel = channel_id, text="Here's the district-wise tally :\n{}".format(getValues.districtData()))
+			web_client.chat_postMessage(channel = channel_id, text="Here's the district-wise tally :\n{}".format(gV.districtData()))
 
 		elif(message.startswith('!statedata')):
-			web_client.chat_postMessage(channel = channel_id, text="Here's the state-wise tally :\n{}".format(getValues.stateData()))
+			web_client.chat_postMessage(channel = channel_id, text="Here's the state-wise tally :\n{}".format(gV.stateData()))
 
 		elif(message.startswith('!apidata')):
-			web_client.chat_postMessage(channel = channel_id, text="Here's the API data :\n{}".format(getValues.apiDistrictData()))
+			web_client.chat_postMessage(channel = channel_id, text="Here's the API data :\n{}".format(gV.apiDistrictData()))
 
 		elif(message.startswith('!findstate')):
 			stateName = message[11:]
 			if(len(stateName) > 0):
-				web_client.chat_postMessage(channel = channel_id, text=getValues.findState(stateName))
+				web_client.chat_postMessage(channel = channel_id, text=gV.findState(stateName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the State")
 
 		elif(message.startswith('!finddist')):
 			districtName = message[10:]
 			if(len(districtName) > 0):
-				web_client.chat_postMessage(channel = channel_id, text=getValues.findDistrict(districtName))
+				web_client.chat_postMessage(channel = channel_id, text=gV.findDistrict(districtName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the District")
 		
 		elif(message.startswith('!statedists')):
 			stateName = message[12:]
 			if(len(stateName) > 0):
-				web_client.chat_postMessage(channel = channel_id, text=getValues.stateDists(stateName))
+				web_client.chat_postMessage(channel = channel_id, text=gV.stateDists(stateName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the State")
 
 		elif(message.startswith('!distnatot')):
-			web_client.chat_postMessage(channel = channel_id, text=getValues.totDistNA())
+			web_client.chat_postMessage(channel = channel_id, text=gV.totDistNA())
 
 		elif(message.startswith('!distnastate')):
 			stateName = message[13:]
 			if(len(stateName) > 0):
-				web_client.chat_postMessage(channel = channel_id, text=getValues.distNAstate(stateName))
+				web_client.chat_postMessage(channel = channel_id, text=gV.distNAstate(stateName))
 			else:
 				web_client.chat_postMessage(channel = channel_id, text="Enter the State")
 		
 		elif(message.startswith('!todaysdata')):
-			web_client.chat_postMessage(channel = channel_id, text=getValues.getTodaysData())
+			web_client.chat_postMessage(channel = channel_id, text=gV.getTodaysData())
 		
 		elif(message.startswith('!todaysstate')):
-			web_client.chat_postMessage(channel = channel_id, text=getValues.getTodaysStateData())
+			web_client.chat_postMessage(channel = channel_id, text=gV.getTodaysStateData())
 		
 		elif(message.startswith('!findtodaysstate')):
 			stateName = message[17:]
-			web_client.chat_postMessage(channel = channel_id, text=getValues.findTodaysState(stateName))
+			web_client.chat_postMessage(channel = channel_id, text=gV.findTodaysState(stateName))
+
+		elif(message.startswith('!findtodaysdist')):
+			distName = message[16:]
+			web_client.chat_postMessage(channel = channel_id, text=gV.findTodaysDistrict(distName))
 			
 		elif(message.startswith('!help')):
 			fileManager = open('res/bot_intro.txt', 'r')
@@ -95,4 +99,5 @@ def say_hello(**payload):
 rtm_client = RTMClient(token=getTokens()["slack_bot_token"])
 rtm_client.start()
 
-# TODO : today's total count
+# TODO : add state info in findstate
+# TODO : change api function name
