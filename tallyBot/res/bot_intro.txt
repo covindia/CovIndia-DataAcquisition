@@ -15,6 +15,6 @@ Below are few of the commands you can use:
 `!todaysdata` : Get today's updates, district-wise
 `!todaysstate`: Get today's updates, state-wise
 `!findtodaysstate stateName` : Get today's updates for a given state
-`!findtodaysstate districtName` : Get today's updates for a given district
+`!findtodaysdist districtName` : Get today's updates for a given district
 
 NOTE : Don't even dare to say ok boomer
