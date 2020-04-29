@@ -33,7 +33,7 @@ def sendReport(jsonData): # Red Wing's maing job
 
 def checkCase(text):
 	text = text.lower()
-	return (('covid' in text or 'coronavirus' in text) and ('fresh' in text or 'positive' in text or 'new case' in text or 'dead' in text or 'death' in text or 'deaths' in text or 'passed away' in text or 'dies' in text) or 'bulletin' in text)
+	return (('covid' in text or 'coronavirus' in text) and ('fresh' in text or 'positive' in text or 'new case' in text or 'dead' in text or 'death' in text or 'passed away' in text or 'dies' in text or 'cured' in text or 'tested' in text or 'tests' in text or 'discharged' in text) or 'bulletin' in text)
 
 def MPcase(text): # MP is weird, has everything in Hindi, this is the only english thing it had ;-;
 	text = text.lower()
@@ -58,7 +58,7 @@ def updateTweetsInfected():
 				print('Exception : {}'.format(e))
 				print('Tweet : {}\n\n'.format(tweet.text))
 				
-		elif(antiCreepTime == 40): # The actual code for antiCreep 
+		elif(antiCreepTime == 25): # The actual code for antiCreep 
 			sendReport({'text': "AntiCreep:", 'attachments' : [{'text' : "Sam is still scanning, last scan : " + tweet.text}]})
 			antiCreepTime = 0
 
