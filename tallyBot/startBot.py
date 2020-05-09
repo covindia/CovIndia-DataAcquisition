@@ -43,10 +43,7 @@ rtm_client = RTMClient(token = getTokens()["slack_bot_token"])
 
 try:
 	rtm_client.start()
+	sendReport({'text': "Message from TallyBot: ", 'attachments' : [{'text' : "I've been stopped manually."}]})
 
 except Exception as e:
 	sendReport({'text': "TallyBot has fallen into pieces! <@" + getTokens()["mechanicID"] + "> restart required:", 'attachments' : [{'text' : "Exception: {}".format(e)}]})
-
-sendReport({'text': "Message from TallyBot: ", 'attachments' : [{'text' : "I've been stopped manually."}]})
-
-# TODO : add find Yesterday's state command
