@@ -99,5 +99,6 @@ def say_hello(**payload):
 rtm_client = RTMClient(token=getTokens()["slack_bot_token"])
 rtm_client.start()
 
-# TODO : add state info in findstate
 # TODO : change api function name
+# TODO : add commands for new sheet
+# TODO : add find Yesterday's state command
