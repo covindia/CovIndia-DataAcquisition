@@ -11,6 +11,13 @@ from oauth2client.service_account import ServiceAccountCredentials
 def getTokens():
 	return json.load(open('res/TOKENS.json', 'r'))
 
+def sendReport(jsonData): # This is Red Wing. Checkout Sam in the same repo for more info.
+	#Too lazy to write this everytime, hence make function, get even more lazy
+	response = requests.post(getTokens()["red_wing"], json=jsonData, headers={'Content-Type': 'application/json'})
+
+	if(response.status_code != 200):
+		print("Failed to send message. Error : " + response.text) #ideally this should never happen
+
 def getDate():
 	return datetime.now().strftime('%d/%m/%Y')
 	# today = datetime.now()
@@ -19,9 +26,11 @@ def getDate():
 scope = ['https://spreadsheets.google.com/feeds']
 creds = ServiceAccountCredentials.from_json_keyfile_name('res/credentials.json',scope)
 client = gspread.authorize(creds)
-sheet = client.open_by_url(getTokens()["old_sheet_url"]).worksheet('Sheet1')
 
-def reloadData():
+old_sheet = client.open_by_url(getTokens()["old_sheet_url"]).worksheet('Sheet1')
+new_sheet = client.open_by_url(getTokens()["new_sheet_url"]).worksheet('Sheet1')
+
+def reloadData(sheet):
 
 	totalData = {}
 	todaysData = {}
@@ -42,7 +51,7 @@ def reloadData():
 		
 		except Exception as e:
 			print('Exception at {}, error : {}'.format(rowNum, e))
-			# TODO : Send a messae via Sam
+			sendReport({'text': "Alert from TallyBot:", 'attachments' : [{'text' : "Somethings off at row {}. Exception: {}".format(rowNum, e)}]})
 
 		try:
 			infected = int(row[4])
@@ -100,8 +109,12 @@ def reloadData():
 		"todaysData" : todaysData
 	})
 
-def retTotalData():
-	return reloadData()["totalData"]
+def retTotalData(sheet):
+	if(sheet == 'new'):
+		return reloadData(new_sheet)["totalData"]
+	return reloadData(old_sheet)["totalData"]
 
-def retTodaysData():
-	return reloadData()["todaysData"]
+def retTodaysData(sheet):
+	if(sheet == 'new'):
+		return reloadData(new_sheet)["todaysData"]
+	return reloadData(old_sheet)["todaysData"]

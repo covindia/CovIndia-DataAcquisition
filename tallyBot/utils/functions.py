@@ -4,8 +4,8 @@
 
 from utils.getData import retTodaysData, retTotalData
 
-def stateData():
-	totalData = retTotalData()
+def stateData(sheet = 'old'):
+	totalData = retTotalData(sheet)
 	stateText = ''
 	for stateBoi in totalData:
 		infectedStateSum = 0
@@ -16,8 +16,8 @@ def stateData():
 		stateText += stateBoi +'\nInfected : {}'.format(infectedStateSum) + '\nDead : {}\n\n'.format(deadStateSum)
 	return stateText
 
-def districtData():
-	totalData = retTotalData()
+def districtData(sheet = 'old'):
+	totalData = retTotalData(sheet)
 	districtText = ''
 	for stateBoi in totalData:
 		districtText += '{} :\n'.format(stateBoi)
@@ -25,8 +25,8 @@ def districtData():
 			districtText += distBoi + ':\nInfected : {}'.format(totalData[stateBoi][distBoi]["infected"]) + '\nDead : {}\n\n'.format(totalData[stateBoi][distBoi]["dead"])
 	return districtText
 
-def findState(stateName):
-	totalData = retTotalData()
+def findState(stateName, sheet = 'old'):
+	totalData = retTotalData(sheet)
 	stateText = ''
 	if stateName in totalData:
 		infectedStateSum = 0
@@ -38,8 +38,8 @@ def findState(stateName):
 		return stateText
 	return('{} not found, check spelling and try again'.format(stateName))
 
-def findDistrict(districtName):
-	totalData = retTotalData()
+def findDistrict(districtName, sheet = 'old'):
+	totalData = retTotalData(sheet)
 	districtText = ''
 	if(districtName == 'DIST_NA'):
 		return 'Use !distnatot to get all DIST_NA, or !distnastate statename for a particular state'
@@ -49,8 +49,8 @@ def findDistrict(districtName):
 			return districtText
 	return('{} not found, check spelling and try again'.format(districtName))
 
-def stateDists(stateName):
-	totalData = retTotalData()
+def stateDists(stateName, sheet = 'old'):
+	totalData = retTotalData(sheet)
 	infectedSum = 0
 	deadSum = 0
 	stateDistrictsText = 'Districts with numbers in {}:\n'.format(stateName)
@@ -63,8 +63,8 @@ def stateDists(stateName):
 		return stateDistrictsText
 	return "Found nothing for {}".format(stateName)
 
-def totDistNA():
-	totalData = retTotalData()
+def totDistNA(sheet = 'old'):
+	totalData = retTotalData(sheet)
 	retText = 'DIST_NAs statewise :\n'
 	distNAinfected = 0
 	distNAdead = 0
@@ -79,8 +79,8 @@ def totDistNA():
 		return retText
 	return 'Good News, ALL DIST_NA CLEARED!!! Party time'
 
-def distNAstate(stateName):
-	totalData = retTotalData()
+def distNAstate(stateName, sheet = 'old'):
+	totalData = retTotalData(sheet)
 	text = 'DIST_NAs in {} :\n'.format(stateName)
 	if(stateName in totalData):
 		if("DIST_NA" in totalData[stateName]):
@@ -88,8 +88,8 @@ def distNAstate(stateName):
 			return text
 	return "Good news! No DIST_NA for {}".format(stateName)
 
-def getTodaysData():
-	todaysData = retTodaysData()
+def getTodaysData(sheet = 'old'):
+	todaysData = retTodaysData(sheet)
 	text = ''
 	infectedSum = 0
 	deadSum = 0
@@ -104,8 +104,8 @@ def getTodaysData():
 		return text
 	return 'Nothing entered for today'
 
-def getTodaysStateData():
-	todaysData = retTodaysData()
+def getTodaysStateData(sheet = 'old'):
+	todaysData = retTodaysData(sheet)
 	text = ''
 	infectedSum = 0
 	deadSum = 0
@@ -124,8 +124,8 @@ def getTodaysStateData():
 		return text
 	return 'Nothing entered for today'
 
-def findTodaysState(stateName):
-	todaysData = retTodaysData()
+def findTodaysState(stateName, sheet = 'old'):
+	todaysData = retTodaysData(sheet)
 	text = 'Todays data for {}\n'.format(stateName)
 	infectedSum = 0
 	deadSum = 0
@@ -139,8 +139,8 @@ def findTodaysState(stateName):
 	
 	return 'Nothing entered for {} today'.format(stateName)
 
-def findTodaysDistrict(districtName):
-	todaysData = retTodaysData()
+def findTodaysDistrict(districtName, sheet = 'old'):
+	todaysData = retTodaysData(sheet)
 	text = 'Todays data for {}:\n'.format(districtName)
 	for stateName in todaysData:
 		if districtName in todaysData[stateName]:

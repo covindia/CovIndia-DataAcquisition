@@ -10,11 +10,12 @@ import json
 import requests
 
 from utils.commandHandler import commandHandler
-from utils.getData import getTokens
+from utils.getData import getTokens, sendReport
 
 @RTMClient.run_on(event="hello")
 def bot_init(**payload):
 	print('The bot has started to run\n')
+	sendReport({'text': "Message from TallyBot:", 'attachments' : [{'text' : "I've started running"}]})
 	
 @RTMClient.run_on(event="message")
 def say_hello(**payload):
@@ -38,9 +39,14 @@ def say_hello(**payload):
 	elif('boomer' in message.lower() and user != ''):
 		requests.post('https://slack.com/api/files.upload', data={'token': getTokens()["slack_bot_token"], 'channels': [channel_id], 'title': 'The boomer burn'}, files={'file': open('res/ok_boomer.jpg', 'rb')})
 
-rtm_client = RTMClient(token=getTokens()["slack_bot_token"])
-rtm_client.start()
+rtm_client = RTMClient(token = getTokens()["slack_bot_token"])
 
-# TODO : change api function name
-# TODO : add commands for new sheet
+try:
+	rtm_client.start()
+
+except Exception as e:
+	sendReport({'text': "TallyBot has fallen into pieces! <@" + getTokens()["mechanicID"] + "> restart required:", 'attachments' : [{'text' : "Exception: {}".format(e)}]})
+
+sendReport({'text': "Message from TallyBot: ", 'attachments' : [{'text' : "I've been stopped manually."}]})
+
 # TODO : add find Yesterday's state command
