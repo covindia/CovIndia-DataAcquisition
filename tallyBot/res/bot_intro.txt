@@ -4,17 +4,27 @@ Below are few of the commands you can use:
 
 `!start` : To check if I'm still up
 `!help` : To get this
+
 `!Ddata` : Gives the district-wise tally
 `!Sdata` : Gives the state-wise tally
+
 `!FS stateName` : Get the values of a specific state
 `!FD districtName` : Get the values of a specific district
+
 `!SD stateName` : Get the values of all districts in a state
+
 `!distnatot` : Get the total DIST_NA
-`!distnaS stateName` : Get the DIST_NA for a state
+`!Sdistna stateName` : Get the DIST_NA for a state
+
 `!Tdata` : Get today's updates, district-wise
 `!TS`: Get today's updates, state-wise
 `!FTS stateName` : Get today's updates for a given state
 `!FTD districtName` : Get today's updates for a given district
+
+`!Ydata` : Get yesterday's updates, district-wise
+`!YS`: Get yesterday's updates, state-wise
+`!FYS stateName` : Get yesterday's updates for a given state
+`!FYD districtName` : Get yesterday's updates for a given district
 
 For the latest sheet, add a 2 before the command.
 Eg : `!2distnatot` for total DIST_NA in new sheet

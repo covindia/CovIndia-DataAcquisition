@@ -30,16 +30,16 @@ def commandHandler(message, user):
 		return (funcs.findState(getName('!FS', message)))
 
 	elif(message.startswith('!FD')):
-		return (funcs.findState(getName('!FD', message)))
+		return (funcs.findDistrict(getName('!FD', message)))
 
 	elif(message.startswith('!SD')):
-		return (funcs.findState(getName('!SD', message)))
+		return (funcs.stateDists(getName('!SD', message)))
 
 	elif(message.startswith('!distnatot')):
 		return (funcs.totDistNA())
 
-	elif(message.startswith('!distnaS')):
-		return (funcs.findState(getName('!distnaS', message)))
+	elif(message.startswith('!Sdistna')):
+		return (funcs.distNAstate(getName('!Sdistna', message)))
 
 	elif(message.startswith('!Tdata')):
 		return (funcs.getTodaysData())
@@ -48,10 +48,22 @@ def commandHandler(message, user):
 		return (funcs.getTodaysStateData())
 
 	elif(message.startswith('!FTS')):
-		return (funcs.findState(getName('!FTS', message)))
+		return (funcs.findTodaysState(getName('!FTS', message)))
 
 	elif(message.startswith('!FTD')):
-		return (funcs.findState(getName('!FTD', message)))
+		return (funcs.findTodaysDistrict(getName('!FTD', message)))
+
+	elif(message.startswith('!Ydata')):
+		return (funcs.getYstdData())
+
+	elif(message.startswith('!YS')):
+		return (funcs.getYstdStateData())
+
+	elif(message.startswith('!FYS')):
+		return (funcs.findYstdState(getName('!FYS', message)))
+
+	elif(message.startswith('!FYD')):
+		return (funcs.findYstdDistrict(getName('!FTD', message)))
 	
 	# New sheet commands
 
@@ -65,16 +77,16 @@ def commandHandler(message, user):
 		return (funcs.findState(getName('!2FS', message), 'new'))
 
 	elif(message.startswith('!2FD')):
-		return (funcs.findState(getName('!2FD', message), 'new'))
+		return (funcs.findDistrict(getName('!2FD', message), 'new'))
 
 	elif(message.startswith('!2SD')):
-		return (funcs.findState(getName('!2SD', message), 'new'))
+		return (funcs.stateDists(getName('!2SD', message), 'new'))
 
 	elif(message.startswith('!2distnatot')):
 		return (funcs.totDistNA('new'))
 
-	elif(message.startswith('!2distnaS')):
-		return (funcs.findState(getName('!2distnaS', message), 'new'))
+	elif(message.startswith('!2Sdistna')):
+		return (funcs.distNAstate(getName('!2distnaS', message), 'new'))
 
 	elif(message.startswith('!2Tdata')):
 		return (funcs.getTodaysData('new'))
@@ -83,10 +95,22 @@ def commandHandler(message, user):
 		return (funcs.getTodaysStateData('new'))
 
 	elif(message.startswith('!2FTS')):
-		return (funcs.findState(getName('!2FTS', message)))
+		return (funcs.findTodaysState(getName('!2FTS', message)))
 
 	elif(message.startswith('!2FTD')):
-		return (funcs.findState(getName('!2FTD', message)))
+		return (funcs.findTodaysDistrict(getName('!2FTD', message)))
+
+	elif(message.startswith('!2Ydata')):
+		return (funcs.getYstdData('new'))
+
+	elif(message.startswith('!2YS')):
+		return (funcs.getYstdData('new'))
+
+	elif(message.startswith('!2FYS')):
+		return (funcs.findYstdState(getName('!2FTS', message)))
+
+	elif(message.startswith('!2FYD')):
+		return (funcs.findYstdDistrict(getName('!2FTD', message)))
 	
 	else:
 		return ("IDK that command, try !help")

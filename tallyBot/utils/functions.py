@@ -2,27 +2,27 @@
 	Author: Srikar
 """
 
-from utils.getData import retTodaysData, retTotalData
+from utils.getData import retTodaysData, retTotalData, retYstdData
 
 def stateData(sheet = 'old'):
 	totalData = retTotalData(sheet)
 	stateText = ''
-	for stateBoi in totalData:
+	for state in totalData:
 		infectedStateSum = 0
 		deadStateSum = 0
-		for districtBoi in totalData[stateBoi]:
-			infectedStateSum += totalData[stateBoi][districtBoi]["infected"]
-			deadStateSum += totalData[stateBoi][districtBoi]["dead"]
-		stateText += stateBoi +'\nInfected : {}'.format(infectedStateSum) + '\nDead : {}\n\n'.format(deadStateSum)
+		for district in totalData[state]:
+			infectedStateSum += totalData[state][district]["infected"]
+			deadStateSum += totalData[state][district]["dead"]
+		stateText += state +'\nInfected : {}'.format(infectedStateSum) + '\nDead : {}\n\n'.format(deadStateSum)
 	return stateText
 
 def districtData(sheet = 'old'):
 	totalData = retTotalData(sheet)
 	districtText = ''
-	for stateBoi in totalData:
-		districtText += '{} :\n'.format(stateBoi)
-		for distBoi in totalData[stateBoi]:
-			districtText += distBoi + ':\nInfected : {}'.format(totalData[stateBoi][distBoi]["infected"]) + '\nDead : {}\n\n'.format(totalData[stateBoi][distBoi]["dead"])
+	for state in totalData:
+		districtText += '{} :\n'.format(state)
+		for district in totalData[state]:
+			districtText += district + ':\nInfected : {}'.format(totalData[state][district]["infected"]) + '\nDead : {}\n\n'.format(totalData[state][district]["dead"])
 	return districtText
 
 def findState(stateName, sheet = 'old'):
@@ -31,9 +31,9 @@ def findState(stateName, sheet = 'old'):
 	if stateName in totalData:
 		infectedStateSum = 0
 		deadStateSum = 0
-		for districtBoi in totalData[stateName]:
-			infectedStateSum += totalData[stateName][districtBoi]["infected"]
-			deadStateSum += totalData[stateName][districtBoi]["dead"]
+		for district in totalData[stateName]:
+			infectedStateSum += totalData[stateName][district]["infected"]
+			deadStateSum += totalData[stateName][district]["dead"]
 		stateText = 'Values for {}:\n'.format(stateName) + 'Infected : {}\nDead : {}'.format(infectedStateSum, deadStateSum)
 		return stateText
 	return('{} not found, check spelling and try again'.format(stateName))
@@ -43,9 +43,9 @@ def findDistrict(districtName, sheet = 'old'):
 	districtText = ''
 	if(districtName == 'DIST_NA'):
 		return 'Use !distnatot to get all DIST_NA, or !distnastate statename for a particular state'
-	for stateBoi in totalData:
-		if districtName in totalData[stateBoi]:
-			districtText = 'Values for {}, {}:\n'.format(districtName, stateBoi) + '\nInfected : {}'.format(totalData[stateBoi][districtName]["infected"]) + '\nDead : {}'.format(totalData[stateBoi][districtName]["dead"])
+	for state in totalData:
+		if districtName in totalData[state]:
+			districtText = 'Values for {}, {}:\n'.format(districtName, state) + '\nInfected : {}'.format(totalData[state][districtName]["infected"]) + '\nDead : {}'.format(totalData[state][districtName]["dead"])
 			return districtText
 	return('{} not found, check spelling and try again'.format(districtName))
 
@@ -55,10 +55,10 @@ def stateDists(stateName, sheet = 'old'):
 	deadSum = 0
 	stateDistrictsText = 'Districts with numbers in {}:\n'.format(stateName)
 	if stateName in totalData:
-		for districtBoi in totalData[stateName]:
-			infectedSum += totalData[stateName][districtBoi]["infected"]
-			deadSum += totalData[stateName][districtBoi]["dead"]
-			stateDistrictsText += districtBoi +'\nInfected : {}\nDead : {}\n\n'.format(totalData[stateName][districtBoi]["infected"], totalData[stateName][districtBoi]["dead"])
+		for district in totalData[stateName]:
+			infectedSum += totalData[stateName][district]["infected"]
+			deadSum += totalData[stateName][district]["dead"]
+			stateDistrictsText += district +'\nInfected : {}\nDead : {}\n\n'.format(totalData[stateName][district]["infected"], totalData[stateName][district]["dead"])
 		stateDistrictsText += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
 		return stateDistrictsText
 	return "Found nothing for {}".format(stateName)
@@ -68,12 +68,12 @@ def totDistNA(sheet = 'old'):
 	retText = 'DIST_NAs statewise :\n'
 	distNAinfected = 0
 	distNAdead = 0
-	for stateBoi in totalData:
-		for districtBoi in totalData[stateBoi]:
-			if(districtBoi == 'DIST_NA'):
-				retText += 'In {}:\n'.format(stateBoi) + 'Infected : {}\nDead : {}\n\n'.format(totalData[stateBoi][districtBoi]["infected"], totalData[stateBoi][districtBoi]["dead"])
-				distNAinfected += totalData[stateBoi][districtBoi]["infected"]
-				distNAdead += totalData[stateBoi][districtBoi]["dead"]
+	for state in totalData:
+		for district in totalData[state]:
+			if(district == 'DIST_NA'):
+				retText += 'In {}:\n'.format(state) + 'Infected : {}\nDead : {}\n\n'.format(totalData[state][district]["infected"], totalData[state][district]["dead"])
+				distNAinfected += totalData[state][district]["infected"]
+				distNAdead += totalData[state][district]["dead"]
 	if(distNAdead != 0 and distNAinfected != 0):
 		retText += 'Total DIST_NA count :\nInfected : {}\nDead : {}'.format(distNAinfected, distNAdead)
 		return retText
@@ -93,12 +93,12 @@ def getTodaysData(sheet = 'old'):
 	text = ''
 	infectedSum = 0
 	deadSum = 0
-	for stateBoi in todaysData:
-		text += 'In state {}:\n'.format(stateBoi)
-		for districtBoi in todaysData[stateBoi]:
-			infectedSum += todaysData[stateBoi][districtBoi]["infected"]
-			deadSum += todaysData[stateBoi][districtBoi]["dead"]
-			text += '{} :\nInfected : {}\nDead : {}\n\n'.format(districtBoi, todaysData[stateBoi][districtBoi]["infected"], todaysData[stateBoi][districtBoi]["dead"])
+	for state in todaysData:
+		text += 'In state {}:\n'.format(state)
+		for district in todaysData[state]:
+			infectedSum += todaysData[state][district]["infected"]
+			deadSum += todaysData[state][district]["dead"]
+			text += '{} :\nInfected : {}\nDead : {}\n\n'.format(district, todaysData[state][district]["infected"], todaysData[state][district]["dead"])
 	text += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
 	if(text != ''):
 		return text
@@ -109,15 +109,15 @@ def getTodaysStateData(sheet = 'old'):
 	text = ''
 	infectedSum = 0
 	deadSum = 0
-	for stateBoi in todaysData:
-		text += 'In {}:\n'.format(stateBoi)
+	for state in todaysData:
+		text += 'In {}:\n'.format(state)
 		stateInfected = 0
 		stateDead = 0
-		for districtBoi in todaysData[stateBoi]:
-			infectedSum += todaysData[stateBoi][districtBoi]["infected"]
-			stateInfected += todaysData[stateBoi][districtBoi]["infected"]
-			stateDead += todaysData[stateBoi][districtBoi]["dead"]
-			deadSum += todaysData[stateBoi][districtBoi]["dead"]
+		for district in todaysData[state]:
+			infectedSum += todaysData[state][district]["infected"]
+			stateInfected += todaysData[state][district]["infected"]
+			stateDead += todaysData[state][district]["dead"]
+			deadSum += todaysData[state][district]["dead"]
 		text += 'Infected : {}\nDead : {}\n\n'.format(stateInfected, stateDead)
 	text += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
 	if(text != ''):
@@ -130,14 +130,14 @@ def findTodaysState(stateName, sheet = 'old'):
 	infectedSum = 0
 	deadSum = 0
 	if stateName in todaysData:
-		for districtBoi in todaysData[stateName]:
-			infectedSum += todaysData[stateName][districtBoi]["infected"]
-			deadSum += todaysData[stateName][districtBoi]["dead"]
-			text += '{}:\nInfected : {}\nDead : {}\n\n'.format(districtBoi, todaysData[stateName][districtBoi]["infected"], todaysData[stateName][districtBoi]["dead"])
+		for district in todaysData[stateName]:
+			infectedSum += todaysData[stateName][district]["infected"]
+			deadSum += todaysData[stateName][district]["dead"]
+			text += '{}:\nInfected : {}\nDead : {}\n\n'.format(district, todaysData[stateName][district]["infected"], todaysData[stateName][district]["dead"])
 		text += 'Total infected today : {}\nTotal dead today : {}'.format(infectedSum, deadSum)
 		return text
 	
-	return 'Nothing entered for {} today'.format(stateName)
+	return 'Nothing entered in {} for today'.format(stateName)
 
 def findTodaysDistrict(districtName, sheet = 'old'):
 	todaysData = retTodaysData(sheet)
@@ -147,4 +147,65 @@ def findTodaysDistrict(districtName, sheet = 'old'):
 			text += 'Infected : {}\nDead : {}'.format(todaysData[stateName][districtName]["infected"], todaysData[stateName][districtName]["dead"])
 			return text
 
-	return 'Nothing entered for {} today'.format(districtName)
+	return 'Nothing entered in {} for today'.format(districtName)
+
+def getYstdData(sheet = 'old'):
+	ystdData = retYstdData(sheet)
+	text = ''
+	infectedSum = 0
+	deadSum = 0
+	for state in ystdData:
+		text += 'In state {}:\n'.format(state)
+		for district in ystdData[state]:
+			infectedSum += ystdData[state][district]["infected"]
+			deadSum += ystdData[state][district]["dead"]
+			text += '{} :\nInfected : {}\nDead : {}\n\n'.format(district, ystdData[state][district]["infected"], ystdData[state][district]["dead"])
+	text += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
+	if(text != ''):
+		return text
+	return 'Nothing entered yesterday'
+
+def getYstdStateData(sheet = 'old'):
+	ystdData = retYstdData(sheet)
+	text = ''
+	infectedSum = 0
+	deadSum = 0
+	for state in ystdData:
+		text += 'In {}:\n'.format(state)
+		stateInfected = 0
+		stateDead = 0
+		for district in ystdData[state]:
+			infectedSum += ystdData[state][district]["infected"]
+			stateInfected += ystdData[state][district]["infected"]
+			stateDead += ystdData[state][district]["dead"]
+			deadSum += ystdData[state][district]["dead"]
+		text += 'Infected : {}\nDead : {}\n\n'.format(stateInfected, stateDead)
+	text += 'Total infected : {}\nTotal dead : {}'.format(infectedSum, deadSum)
+	if(text != ''):
+		return text    # I'm pretty sure the below statement would be never used. If it is, that's good news!
+	return 'Nothing entered yesterday'
+
+def findYstdState(stateName, sheet = 'old'):
+	ystdData = retYstdData(sheet)
+	text = 'ystd data for {}\n'.format(stateName)
+	infectedSum = 0
+	deadSum = 0
+	if stateName in ystdData:
+		for district in ystdData[stateName]:
+			infectedSum += ystdData[stateName][district]["infected"]
+			deadSum += ystdData[stateName][district]["dead"]
+			text += '{}:\nInfected : {}\nDead : {}\n\n'.format(district, ystdData[stateName][district]["infected"], ystdData[stateName][district]["dead"])
+		text += 'Total infected today : {}\nTotal dead today : {}'.format(infectedSum, deadSum)
+		return text
+	
+	return 'Nothing was entered for {} yesterday'.format(stateName)
+
+def findYstdDistrict(districtName, sheet = 'old'):
+	ystdData = retYstdData(sheet)
+	text = 'ystd data for {}:\n'.format(districtName)
+	for stateName in ystdData:
+		if districtName in ystdData[stateName]:
+			text += 'Infected : {}\nDead : {}'.format(ystdData[stateName][districtName]["infected"], ystdData[stateName][districtName]["dead"])
+			return text
+
+	return 'Nothing was entered in {} yesterday'.format(districtName)
