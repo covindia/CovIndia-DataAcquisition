@@ -105,8 +105,8 @@ def reloadData(sheet):
 				todaysData[state][district]["dead"] = dead
 		
 		if(date == getDate('yesterday')):
-			if state in todaysData:
-				if district in todaysData[state]:
+			if state in ystdData:
+				if district in ystdData[state]:
 					
 					ystdData[state][district]["infected"] += infected
 					ystdData[state][district]["dead"] += dead
