@@ -38,11 +38,12 @@ def reloadData(sheet):
 	totalData = {}
 	todaysData = {}
 	ystdData = {}
+	distNAdata = {}
 
 	data = sheet.get()   #sheet.get the whole document as a list of lists
 	data = data[1:]
 
-	rowNum = 1
+	rowNum = 2
 
 	for row in data:
 
@@ -123,12 +124,22 @@ def reloadData(sheet):
 				
 				ystdData[state][district]["infected"] = infected
 				ystdData[state][district]["dead"] = dead
+
+		if(district == 'DIST_NA'):
+
+			if(state in distNAdata):
+				distNAdata[state].append(rowNum)
+			else:
+				distNAdata[state] = [rowNum]
+
+
 		rowNum += 1
 
 	return ({
 		"totalData" : totalData,
 		"todaysData" : todaysData,
-		"ystdData" : ystdData
+		"ystdData" : ystdData,
+		"distNaData" : distNAdata
 	})
 
 def retTotalData(sheet):
@@ -145,3 +156,8 @@ def retYstdData(sheet):
 	if(sheet == 'new'):
 		return reloadData(new_sheet)["ystdData"]
 	return reloadData(old_sheet)["ystdData"]
+
+def retDistNaData(sheet):
+	if(sheet == 'new'):
+		return reloadData(new_sheet)["distNaData"]
+	return reloadData(old_sheet)["distNaData"]

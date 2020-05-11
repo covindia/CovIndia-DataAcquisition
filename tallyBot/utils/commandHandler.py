@@ -65,6 +65,9 @@ def commandHandler(message, user):
 	elif(message.startswith('!FYD')):
 		return (funcs.findYstdDistrict(getName('!FTD', message)))
 	
+	elif(message.startswith('!distnarows')):
+		return (funcs.getDistNArows(getName('!distnarows', message)))
+	
 	# New sheet commands
 
 	elif(message.startswith('!2Ddata')):
@@ -95,10 +98,10 @@ def commandHandler(message, user):
 		return (funcs.getTodaysStateData('new'))
 
 	elif(message.startswith('!2FTS')):
-		return (funcs.findTodaysState(getName('!2FTS', message)))
+		return (funcs.findTodaysState(getName('!2FTS', message), 'new'))
 
 	elif(message.startswith('!2FTD')):
-		return (funcs.findTodaysDistrict(getName('!2FTD', message)))
+		return (funcs.findTodaysDistrict(getName('!2FTD', message), 'new'))
 
 	elif(message.startswith('!2Ydata')):
 		return (funcs.getYstdData('new'))
@@ -107,10 +110,13 @@ def commandHandler(message, user):
 		return (funcs.getYstdData('new'))
 
 	elif(message.startswith('!2FYS')):
-		return (funcs.findYstdState(getName('!2FTS', message)))
+		return (funcs.findYstdState(getName('!2FTS', message), 'new'))
 
 	elif(message.startswith('!2FYD')):
-		return (funcs.findYstdDistrict(getName('!2FTD', message)))
+		return (funcs.findYstdDistrict(getName('!2FTD', message), 'new'))
+	
+	elif(message.startswith('!2distnarows')):
+		return (funcs.getDistNArows(getName('!2distnarows', message), 'new'))
 
 	elif(message.startswith('!checksync')):
 		return (funcs.isSynced())
