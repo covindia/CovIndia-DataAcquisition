@@ -111,6 +111,9 @@ def commandHandler(message, user):
 
 	elif(message.startswith('!2FYD')):
 		return (funcs.findYstdDistrict(getName('!2FTD', message)))
+
+	elif(message.startswith('!checksync')):
+		return (funcs.isSynced())
 	
 	else:
 		return ("IDK that command, try !help")

@@ -187,7 +187,7 @@ def getYstdStateData(sheet = 'old'):
 
 def findYstdState(stateName, sheet = 'old'):
 	ystdData = retYstdData(sheet)
-	text = 'ystd data for {}\n'.format(stateName)
+	text = 'Yesterdays data for {}\n'.format(stateName)
 	infectedSum = 0
 	deadSum = 0
 	if stateName in ystdData:
@@ -202,10 +202,54 @@ def findYstdState(stateName, sheet = 'old'):
 
 def findYstdDistrict(districtName, sheet = 'old'):
 	ystdData = retYstdData(sheet)
-	text = 'ystd data for {}:\n'.format(districtName)
+	text = 'Yesterdays data for {}:\n'.format(districtName)
 	for stateName in ystdData:
 		if districtName in ystdData[stateName]:
 			text += 'Infected : {}\nDead : {}'.format(ystdData[stateName][districtName]["infected"], ystdData[stateName][districtName]["dead"])
 			return text
 
 	return 'Nothing was entered in {} yesterday'.format(districtName)
+
+def isSynced():
+	old_sheet_data = retTotalData('old')
+	new_sheet_data = retTotalData('new')
+
+	old_infected_count = new_infected_count = 0
+	old_dead_count = new_dead_count = 0
+
+	for state in old_sheet_data:
+		for district in old_sheet_data[state]:
+			old_infected_count += old_sheet_data[state][district]["infected"]
+			old_dead_count += old_sheet_data[state][district]["dead"]
+	
+	for state in new_sheet_data:
+		for district in new_sheet_data[state]:
+			new_infected_count += new_sheet_data[state][district]["infected"]
+			new_dead_count += new_sheet_data[state][district]["dead"]
+
+	if(old_infected_count == new_infected_count and old_dead_count == new_dead_count):
+		return 'Old and new sheets match perfectly!'
+	
+	else:
+
+		if(old_infected_count >= new_infected_count):
+
+			if(old_dead_count > new_dead_count):
+				return 'Old sheet has {} more infected cases and {} more death cases'.format(old_infected_count - new_infected_count, old_dead_count - new_dead_count)
+			
+			elif(old_dead_count == new_dead_count):
+				return 'Old sheet has {} more infected cases. Death count matches'.format(old_infected_count - new_infected_count)
+			
+			else:
+				return 'Old sheet has {} more infected cases and a deficit of {} death cases'.format(old_infected_count - new_infected_count, new_dead_count - old_dead_count)
+			
+		else:
+
+			if(new_dead_count > new_dead_count):
+				return 'New sheet has {} more infected cases and {} more death cases'.format(new_infected_count - old_infected_count, new_dead_count - old_dead_count)
+			
+			elif(new_dead_count == new_dead_count):
+				return 'New sheet has {} more infected cases. Death count matches'.format(new_infected_count - old_infected_count)
+			
+			else:
+				return 'New sheet has {} more infected cases and a deficit of {} death cases'.format(new_infected_count - old_infected_count, new_dead_count - old_dead_count)

@@ -29,4 +29,8 @@ Below are few of the commands you can use:
 For the latest sheet, add a 2 before the command.
 Eg : `!2distnatot` for total DIST_NA in new sheet
 
+`!checksync` : To check if both the new and old sheets are synced
+
+NOTE : Try to use checksync only a few times. Has a very bad O(n).
+
 WARNING : Don't even dare to say ok boomer
