@@ -104,6 +104,18 @@ def getTodaysData(sheet = 'old'):
 		return text
 	return 'Nothing entered for today'
 
+def getDistNArows(stateName, sheet = 'old'):
+	sheet_data = retDistNaData(sheet)
+	text = 'Following are the rows for DIST_NA in {}\n'.format(stateName)
+	
+	if stateName in sheet_data:
+		text += str(sheet_data[stateName])
+	
+	else:
+		text = 'No DIST_NA in ' + stateName
+	
+	return text
+
 def getTodaysStateData(sheet = 'old'):
 	todaysData = retTodaysData(sheet)
 	text = ''
@@ -253,15 +265,3 @@ def isSynced():
 			
 			else:
 				return 'New sheet has {} more infected cases and a deficit of {} death cases'.format(new_infected_count - old_infected_count, new_dead_count - old_dead_count)
-
-def getDistNArows(stateName, sheet = 'old'):
-	sheet_data = retDistNaData(sheet)
-	text = 'Following are the rows for DIST_NA in {}\n'.format(stateName)
-	
-	if stateName in sheet_data:
-		text += str(sheet_data[stateName])
-	
-	else:
-		text = 'No DIST_NA in ' + stateName
-	
-	return text

@@ -15,6 +15,7 @@ Below are few of the commands you can use:
 
 `!distnatot` : Get the total DIST_NA
 `!Sdistna stateName` : Get the DIST_NA for a state
+`!distnarows stateName` : Get all the DIST_NA rows for a state in the sheet
 
 `!Tdata` : Get today's updates, district-wise
 `!TS`: Get today's updates, state-wise
