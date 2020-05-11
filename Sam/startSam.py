@@ -33,7 +33,7 @@ def sendReport(jsonData): # Red Wing's maing job
 
 def checkCase(text):
 	text = text.lower()
-	return (('covid' in text or 'coronavirus' in text) and ('fresh' in text or 'positive' in text or 'new case' in text or 'dead' in text or 'death' in text or 'passed away' in text or 'dies' in text or 'cured' in text or 'tested' in text or 'tests' in text or 'discharged' in text) or 'bulletin' in text)
+	return (('covid' in text or 'coronavirus' in text) and ('fresh' in text or '+ve' in text or 'positive' in text or 'new case' in text or 'dead' in text or 'death' in text or 'passed away' in text or 'dies' in text or 'cured' in text or 'tested' in text or 'tests' in text or 'discharged' in text) or 'bulletin' in text)
 
 def MPcase(text): # MP is weird, has everything in Hindi, this is the only english thing it had ;-;
 	text = text.lower()
