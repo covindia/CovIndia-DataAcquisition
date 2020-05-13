@@ -4,12 +4,13 @@
 	We also have Red Wing who always keeps an eye on Sam, his trusty owner
 
 	Author: Srikar
+			Aman
 """
 import tweepy
 import json
 import time
 import requests
-import pandas as pd
+from testingDataBot import getTestData
 
 def getTokens():
 	return json.load(open('res/TOKENS.json', 'r'))
@@ -62,47 +63,6 @@ def updateTweetsInfected():
 		elif(antiCreepTime == 25): # The actual code for antiCreep 
 			sendReport({'text': "AntiCreep:", 'attachments' : [{'text' : "Sam is still scanning, last scan : " + tweet.text}]})
 			antiCreepTime = 0
-
-def getTestData():
-
-	source = requests.get(data_url).json()
-
-	cols = ['updatedon','state','totaltested','source']
-	df = pd.DataFrame(columns=cols)
-	df2 = pd.DataFrame(columns=cols)
-
-	for litem in source['states_tested_data']:
-		ser = pd.Series(litem)
-		if ser['state']=='Andaman and Nicobar Islands':
-			ser['state']='Andaman and Nicobar'
-		if ser['state']=='Odisha':
-			ser['state']='Orissa'
-		ser = ser[['updatedon','state','totaltested','source']]
-		if ser['totaltested']=='':
-			continue
-		df = df.append(ser,ignore_index=True)
-
-	i=0
-	rang=df.index
-	rang = list(rang)
-	while i in rang:
-	    s = df.loc[i]['state']
-	    j = i
-	    while True:
-	        if df.loc[j]['state']==s and j<rang[-1]:
-	            j=j+1
-	        else:
-	            if j==rang[-1]:
-	                break
-	            j=j-1
-	            break
-	    df.loc[j]['totaltested']=int(df.loc[j]['totaltested'])
-	    df2 = df2.append(df.loc[j],ignore_index=True)
-	    i=j+1
-
-	dic = df2.to_dict('index')
-	with open('testing-data.json','w') as fp:
-		json.dump(dic,fp,sort_keys=True,indent=4)
 
 def main():
 
