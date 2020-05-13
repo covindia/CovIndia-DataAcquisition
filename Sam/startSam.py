@@ -9,6 +9,7 @@ import tweepy
 import json
 import time
 import requests
+import pandas as pd
 
 def getTokens():
 	return json.load(open('res/TOKENS.json', 'r'))
@@ -62,6 +63,47 @@ def updateTweetsInfected():
 			sendReport({'text': "AntiCreep:", 'attachments' : [{'text' : "Sam is still scanning, last scan : " + tweet.text}]})
 			antiCreepTime = 0
 
+def getTestData():
+
+	source = requests.get(data_url).json()
+
+	cols = ['updatedon','state','totaltested','source']
+	df = pd.DataFrame(columns=cols)
+	df2 = pd.DataFrame(columns=cols)
+
+	for litem in source['states_tested_data']:
+		ser = pd.Series(litem)
+		if ser['state']=='Andaman and Nicobar Islands':
+			ser['state']='Andaman and Nicobar'
+		if ser['state']=='Odisha':
+			ser['state']='Orissa'
+		ser = ser[['updatedon','state','totaltested','source']]
+		if ser['totaltested']=='':
+			continue
+		df = df.append(ser,ignore_index=True)
+
+	i=0
+	rang=df.index
+	rang = list(rang)
+	while i in rang:
+	    s = df.loc[i]['state']
+	    j = i
+	    while True:
+	        if df.loc[j]['state']==s and j<rang[-1]:
+	            j=j+1
+	        else:
+	            if j==rang[-1]:
+	                break
+	            j=j-1
+	            break
+	    df.loc[j]['totaltested']=int(df.loc[j]['totaltested'])
+	    df2 = df2.append(df.loc[j],ignore_index=True)
+	    i=j+1
+
+	dic = df2.to_dict('index')
+	with open('testing-data.json','w') as fp:
+		json.dump(dic,fp,sort_keys=True,indent=4)
+
 def main():
 
 	print('Sam is up!')
@@ -90,6 +132,8 @@ def main():
 	
 	# You don't wan't this to happen, it is very bad if it does, since Sam is our OP data-gatherer
 	# Trust me, you'll want him, no matter what
+
+	getTestData()
 
 if __name__ == '__main__':
 
