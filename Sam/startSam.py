@@ -4,7 +4,6 @@
 	We also have Red Wing who always keeps an eye on Sam, his trusty owner
 
 	Author: Srikar
-			Aman
 """
 import tweepy
 import json
