@@ -9,6 +9,7 @@ import tweepy
 import json
 import time
 import requests
+from utils.testingDataBot import getTestData
 
 def getTokens():
 	return json.load(open('res/TOKENS.json', 'r'))
@@ -90,6 +91,8 @@ def main():
 	
 	# You don't wan't this to happen, it is very bad if it does, since Sam is our OP data-gatherer
 	# Trust me, you'll want him, no matter what
+
+	getTestData()
 
 if __name__ == '__main__':
 
