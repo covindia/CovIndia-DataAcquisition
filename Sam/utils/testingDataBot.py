@@ -35,9 +35,10 @@ def getTestData():
 					break
 				j=j-1
 				break
-	df.loc[j]['totaltested']=int(df.loc[j]['totaltested'])
-	df2 = df2.append(df.loc[j],ignore_index=True)
-	i=j+1
+		df.loc[j]['totaltested']=int(df.loc[j]['totaltested'])
+		df2 = df2.append(df.loc[j],ignore_index=True)
+		i=j+1
+
 	dic = df2.to_dict('index')
 	with open('testing-data.json','w') as fp:
 		json.dump(dic,fp,sort_keys=True,indent=4)
