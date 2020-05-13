@@ -10,7 +10,7 @@ import tweepy
 import json
 import time
 import requests
-from testingDataBot import getTestData
+from utils.testingDataBot import getTestData
 
 def getTokens():
 	return json.load(open('res/TOKENS.json', 'r'))
