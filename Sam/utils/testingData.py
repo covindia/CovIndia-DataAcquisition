@@ -22,6 +22,8 @@ def getTestData():
 			ser['state']='Andaman and Nicobar'
 		if ser['state']=='Odisha':
 			ser['state']='Orissa'
+		if ser['state']=='Dadra and Nagar Haveli and Daman and Diu':
+			ser['state']='Dadra and Nagar Haveli'
 		ser = ser[['updatedon','state','totaltested','source']]
 		if ser['totaltested']=='':
 			continue
@@ -46,5 +48,10 @@ def getTestData():
 		i=j+1
 
 	dic = df2.to_dict('index')
+	keys = list(dic.keys())
+	for key in keys:
+		k = str(key)
+		dic[k] = dic[key]
+		del dic[key]
 	with open('testing-data.json','w') as fp:
 		json.dump(dic,fp,sort_keys=True,indent=4)
