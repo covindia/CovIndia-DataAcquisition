@@ -9,13 +9,8 @@ import tweepy
 import json
 import time
 import requests
-from utils.testingData import getTestData
-
-def getTokens():
-	return json.load(open('res/TOKENS.json', 'r'))
-
-def slack_tokens():
-	return json.load(open('res/slackTokens.json', 'r'))
+from utils.updateSheet import slack_tokens, getTokens
+from utils.testingData import updateTestingData
 
 minutes = 1
 antiCreepTime = 0
@@ -27,7 +22,7 @@ api = tweepy.API(auth, wait_on_rate_limit = True)
 
 def sendReport(jsonData): # Red Wing's maing job
 	#Too lazy to write this everytime, hence make function, get even more lazy
-	response = requests.post(slack_tokens()["url"], json=jsonData, headers={'Content-Type': 'application/json'})
+	response = requests.post(slack_tokens()["main_url"], json=jsonData, headers={'Content-Type': 'application/json'})
 
 	if(response.status_code != 200):
 		print("Failed to send message. Error : " + response.text) #ideally this should never happen
@@ -78,6 +73,9 @@ def main():
 
 			if(update_time == 60): # 60 is the minutes after which Red Wing will report about Sam's status
 				sendReport({'text': "Report:", 'attachments' : [{'text' : "Update : Sam is still soaring the skies."}]})
+				
+				updateTestingData(getTokens()["data_url"])
+
 				update_time = 0
 
 			update_time += 1
@@ -91,8 +89,6 @@ def main():
 	
 	# You don't wan't this to happen, it is very bad if it does, since Sam is our OP data-gatherer
 	# Trust me, you'll want him, no matter what
-
-	getTestData()
 
 if __name__ == '__main__':
 
