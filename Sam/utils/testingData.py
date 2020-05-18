@@ -1,3 +1,8 @@
+"""
+	Code to automatically update testing data. Took some time to make it.
+
+	Author: Srikar
+"""
 import requests
 from json import load, dump
 from datetime import datetime
@@ -55,13 +60,7 @@ def updateTestingData(data_url):
 			
 			new_data[date][state]["totTested"] = totTested
 			new_data[date][state]["source"] = source
-
 	
-	# print(new_data)
-
-	# with open('stuff.json', 'w') as FPtr:
-	# 	dump(new_data, FPtr, indent=2)
-
 	
 	if(old_data != new_data):
 
@@ -106,7 +105,7 @@ def updateTestingData(data_url):
 		
 		if report_text == '':
 			report_text = 'Finished syncing local DB'
-		# sendReport({'text': "Report:", 'attachments' : [{'text' : "I have completed updating the below data:\n" + report_text}]})
+		sendReport({'text': "Report:", 'attachments' : [{'text' : "I have completed updating the below data:\n" + report_text}]})
 		print('Finised updating')
 	
 	with open('res/testing-data.json','w') as fp:
