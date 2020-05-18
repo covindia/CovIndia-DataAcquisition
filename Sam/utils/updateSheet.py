@@ -28,3 +28,24 @@ def updateSheet(updateList):
 		Should have found about this when Sauron was made. Meh, better late than never.
 	"""
 	sheet.append_row(updateList)
+
+def getTotalData():
+
+	totTestData = {}
+	data = sheet.get()
+
+	data = data[1:]
+
+	for row in data:
+
+		state = row[2]
+		tested = int(row[3])
+
+		if state in totTestData:
+			
+			totTestData[state] += tested
+
+		else:
+			totTestData[state] = tested
+		
+	return totTestData
