@@ -120,7 +120,7 @@ def sendReport(jsonData): # Red Wing's main job
 
 def checkDate(date_str):
 	
-	min_date = datetime.strptime('16/05/2020', '%d/%m/%Y')
+	min_date = datetime.strptime('18/05/2020', '%d/%m/%Y')
 	date = datetime.strptime(date_str, '%d/%m/%Y')
 
 	return(date >= min_date)
