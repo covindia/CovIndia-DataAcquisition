@@ -317,42 +317,33 @@ def checkTally():
 			elif(online_data[state]["infected"] <  stateInfectedSum):
 				retText += "{} infected cases excess in {}\n".format(stateInfectedSum - online_data[state]["infected"], state)
 			
-			else:
-				retText += "Perfectly synced infected values for {}\n".format(state)
-			
 			if(online_data[state]["dead"] > stateDeadSum):
 				retText += "{} dead cases missing in {}\n".format(online_data[state]["dead"] - stateDeadSum, state)
 			
 			elif(online_data[state]["dead"] <  stateDeadSum):
 				retText += "{} dead cases excess in {}\n".format(stateDeadSum - online_data[state]["dead"], state)
-			
-			else:
-				retText += "Perfectly synced death values for {}\n".format(state)
-
+		
 		else:
 			if(online_data[state]["infected"] != 0 and online_data[state]["dead"] != 0 and state != 'Total'):
 
 				retText += "{} infected cases missing in {}\n".format(online_data[state]["infected"] - totalInfectedSum, state)
 				retText += "{} dead cases missing in {}\n".format(online_data[state]["dead"] - stateDeadSum, state)
 	
+	retText += '\n'
+
 	state = 'Total'
+
 	if(online_data[state]["infected"] > totalInfectedSum):
 		retText += "{} infected cases missing in {}\n".format(online_data[state]["infected"] - totalInfectedSum, state)
 	
 	elif(online_data[state]["infected"] <  totalInfectedSum):
 		retText += "{} infected cases excess in {}\n".format(totalInfectedSum - online_data[state]["infected"], state)
 	
-	else:
-		retText += "Perfectly synced infected values for {}\n".format(state)
-	
 	if(online_data[state]["dead"] > totalDeadSum):
 		retText += "{} dead cases missing in {}\n".format(online_data[state]["dead"] - totalDeadSum, state)
 	
 	elif(online_data[state]["dead"] <  totalDeadSum):
 		retText += "{} dead cases excess in {}\n".format(totalDeadSum - online_data[state]["dead"], state)
-	
-	else:
-		retText += "Perfectly synced death values for {}\n".format(state)
 
 	return retText
 
@@ -366,5 +357,8 @@ def adaptState(state):
 	
 	elif(state =='Dadra and Nagar Haveli and Daman and Diu'):
 		return 'Dadra and Nagar Haveli'
+
+	elif(state == 'State Unassigned'):
+		return 'States Unassigned'
 	
 	return state
