@@ -121,5 +121,8 @@ def commandHandler(message, user):
 	elif(message.startswith('!checksync')):
 		return (funcs.isSynced())
 	
+	elif(message.startswith('!checkTally')):
+		return (funcs.checkTally())
+	
 	else:
 		return ("IDK that command, try !help")

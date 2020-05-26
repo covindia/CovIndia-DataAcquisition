@@ -1,8 +1,9 @@
 """
 	Author: Srikar
 """
-
-from utils.getData import retTodaysData, retTotalData, retYstdData, retDistNaData
+import csv
+import requests
+from utils.getData import retTodaysData, retTotalData, retYstdData, retDistNaData, getTokens
 
 def stateData(sheet = 'old'):
 	totalData = retTotalData(sheet)
@@ -265,3 +266,105 @@ def isSynced():
 			
 			else:
 				return 'New sheet has {} more infected cases and a deficit of {} death cases'.format(new_infected_count - old_infected_count, new_dead_count - old_dead_count)
+
+def checkTally():
+
+	totalData = retTotalData('old')
+	totalInfectedSum = 0
+	totalDeadSum = 0
+	online_data = {}
+
+	retText = ''
+
+	with requests.Session() as s:
+		download = s.get(getTokens()["tally_url"])
+
+		decoded_content = download.content.decode('utf-8')
+
+		cr = csv.reader(decoded_content.splitlines(), delimiter=',')
+		online_data_list = list(cr)
+
+		online_data_list = online_data_list[1:]
+
+	for row in online_data_list:
+		
+		state = adaptState(row[0])
+		infected = int(row[1])
+		dead = int(row[3])
+
+		online_data[state] = {}
+		
+		online_data[state]["infected"] = infected
+		online_data[state]["dead"] = dead
+
+	for state in online_data:
+
+		stateInfectedSum = 0
+		stateDeadSum = 0
+
+		if state in totalData:
+
+			for district in totalData[state]:
+				stateInfectedSum += totalData[state][district]["infected"]
+				stateDeadSum += totalData[state][district]["dead"]
+			
+			totalInfectedSum += stateInfectedSum
+			totalDeadSum += stateDeadSum
+			
+			if(online_data[state]["infected"] > stateInfectedSum):
+				retText += "{} infected cases missing in {}\n".format(online_data[state]["infected"] - stateInfectedSum, state)
+			
+			elif(online_data[state]["infected"] <  stateInfectedSum):
+				retText += "{} infected cases excess in {}\n".format(stateInfectedSum - online_data[state]["infected"], state)
+			
+			else:
+				retText += "Perfectly synced infected values for {}\n".format(state)
+			
+			if(online_data[state]["dead"] > stateDeadSum):
+				retText += "{} dead cases missing in {}\n".format(online_data[state]["dead"] - stateDeadSum, state)
+			
+			elif(online_data[state]["dead"] <  stateDeadSum):
+				retText += "{} dead cases excess in {}\n".format(stateDeadSum - online_data[state]["dead"], state)
+			
+			else:
+				retText += "Perfectly synced death values for {}\n".format(state)
+
+		else:
+			if(online_data[state]["infected"] != 0 and online_data[state]["dead"] != 0 and state != 'Total'):
+
+				retText += "{} infected cases missing in {}\n".format(online_data[state]["infected"] - totalInfectedSum, state)
+				retText += "{} dead cases missing in {}\n".format(online_data[state]["dead"] - stateDeadSum, state)
+	
+	state = 'Total'
+	if(online_data[state]["infected"] > totalInfectedSum):
+		retText += "{} infected cases missing in {}\n".format(online_data[state]["infected"] - totalInfectedSum, state)
+	
+	elif(online_data[state]["infected"] <  totalInfectedSum):
+		retText += "{} infected cases excess in {}\n".format(totalInfectedSum - online_data[state]["infected"], state)
+	
+	else:
+		retText += "Perfectly synced infected values for {}\n".format(state)
+	
+	if(online_data[state]["dead"] > totalDeadSum):
+		retText += "{} dead cases missing in {}\n".format(online_data[state]["dead"] - totalDeadSum, state)
+	
+	elif(online_data[state]["dead"] <  totalDeadSum):
+		retText += "{} dead cases excess in {}\n".format(totalDeadSum - online_data[state]["dead"], state)
+	
+	else:
+		retText += "Perfectly synced death values for {}\n".format(state)
+
+	return retText
+
+def adaptState(state):
+
+	if(state =='Andaman and Nicobar Islands'):
+		return 'Andaman and Nicobar'
+	
+	elif(state =='Odisha'):
+		return 'Orissa'
+	
+	elif(state =='Dadra and Nagar Haveli and Daman and Diu'):
+		return 'Dadra and Nagar Haveli'
+	
+	return state
