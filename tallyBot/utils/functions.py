@@ -3,6 +3,7 @@
 """
 import csv
 import requests
+from json import load
 from utils.getData import retTodaysData, retTotalData, retYstdData, retDistNaData, getTokens
 
 def stateData(sheet = 'old'):
@@ -349,16 +350,11 @@ def checkTally():
 
 def adaptState(state):
 
-	if(state =='Andaman and Nicobar Islands'):
-		return 'Andaman and Nicobar'
+	with open('res/adaptStates.json', 'r') as FPtr:
+		adapt = load(FPtr)
 	
-	elif(state =='Odisha'):
-		return 'Orissa'
+	try:
+		return adapt[state]
 	
-	elif(state =='Dadra and Nagar Haveli and Daman and Diu'):
-		return 'Dadra and Nagar Haveli'
-
-	elif(state == 'State Unassigned'):
-		return 'States Unassigned'
-	
-	return state
+	except KeyError:
+		return state
